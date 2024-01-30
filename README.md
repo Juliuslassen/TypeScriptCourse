@@ -1,4 +1,3 @@
-# Third semester assignment template
+# TypeScript weekly assignments
 
-
-### Your name 
+### Julius Peter Hvid Lassen
