@@ -137,9 +137,9 @@ console.log(ticTacToeArray[2][0]); // "x"
 
 // Part 2
 // A variable that might be null or undefined
-let myString: string | undefined = possibleUndefinedStringFunction()!;
+let myString: string | undefined = "possibleUndefinedStringFunction";
 // Use the exclamation mark to assert that the value is non-null
-let lemgth: number = myString.length;
+let lemgth: number = myString!.length;
 
 
 // 11
@@ -198,8 +198,11 @@ function printName(name?: string) {
 
   const anythingsLengthWithCastingOperator: number = (<string>anything).length;
 
-  const myDiv: HTMLInputElement = document.getElementById("myDiv") as HTMLInputElement;
-  const myDivWithCastingOperator: HTMLInputElement = <HTMLInputElement>document.getElementById("myDiv");
+  //correct way
+  // const myDiv: HTMLInputElement = document.getElementById("myDiv") as HTMLInputElement;
+
+  //probs also works
+  // const myDivWithCastingOperator: HTMLInputElement = <HTMLInputElement>document.getElementById("myDiv");
 
 
   //14
@@ -290,6 +293,8 @@ interface Bird {
   // write a type predicate to narrow the type of the fish parameter
 
   function isFish(p: Fish | Bird): p is Fish{
+
+    //return (p as Fish).swim !== undefined;
     return 'swim' in p;
   }
   
@@ -301,6 +306,28 @@ interface Bird {
     }
   }
 
+  const fisheren: Fish ={
+    swim() {
+      console.log("this is a fish");
+    },
+    layEggs() {
+      console.log("laying eggs");
+      
+    },
+  }
+
+  const birderen: Bird ={
+    fly() {
+      console.log("this is a bird");
+    },
+    layEggs() {
+      console.log("laying eggs");
+      
+    },
+  }
+
+  howToMove(birderen);
+  howToMove(fisheren);
 
   // 18
   //to manye person objects
