@@ -6,8 +6,6 @@
 - Følgende er inkluderet: Express basic
 - Følgende er ikke inkluderet: Express routes, Express Handling Forms, Express Error Handling
 
-## tirsdag
-### Express basic
 To run:
 ```bash
 tsc -p .
@@ -22,6 +20,8 @@ with updated tsconfig.json
 npm run dev
 ```
 
+## tirsdag
+### Express basic
 [Express basic](https://github.com/FullStackTypeScriptCourse/course_material/blob/2024-S/02_node_express/ExpressBasic.md#express-project-part-1)
 
 ### Express routes
