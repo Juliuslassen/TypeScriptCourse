@@ -55,10 +55,12 @@ async function getAllUsers(): Promise<User[] | AxiosError>{
 }
 
 function printTheUser(user: User): void{
+    console.log("");
     console.log("Name: " + user.name);
     console.log("userName: " +user.username);
     console.log("email: " +user.email);
     console.log("phonenumber: " +user.phone);
+    console.log("kasda: " + user.company.catchPhrase);
 }
 
 getUserOne().then((result) => {

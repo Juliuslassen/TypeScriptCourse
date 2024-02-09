@@ -81,10 +81,12 @@ function getAllUsers() {
     });
 }
 function printTheUser(user) {
+    console.log("");
     console.log("Name: " + user.name);
     console.log("userName: " + user.username);
     console.log("email: " + user.email);
     console.log("phonenumber: " + user.phone);
+    console.log("kasda: " + user.company.catchPhrase);
 }
 getUserOne().then(function (result) {
     if (result instanceof Error) {
@@ -104,3 +106,26 @@ getAllUsers().then(function (result) {
         });
     }
 });
+function getFirstUser() {
+    return __awaiter(this, void 0, void 0, function () {
+        var url, response, user, error_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    url = 'https://jsonplaceholder.typicode.com/users/1';
+                    _a.label = 1;
+                case 1:
+                    _a.trys.push([1, 3, , 4]);
+                    return [4 /*yield*/, axios_1.default.get(url)];
+                case 2:
+                    response = _a.sent();
+                    user = response.data;
+                    return [2 /*return*/, user];
+                case 3:
+                    error_2 = _a.sent();
+                    return [2 /*return*/, error_2];
+                case 4: return [2 /*return*/];
+            }
+        });
+    });
+}

@@ -3,8 +3,8 @@
 ## Overview
 
 - Julius Lassen
-- Følgende er inkluderet: Express basic
-- Følgende er ikke inkluderet: Express routes, Express Handling Forms, Express Error Handling
+- Følgende er inkluderet: Express basic, Express routes, Express Handling Forms
+- Følgende er ikke inkluderet: Express Error Handling
 
 To run:
 ```bash
@@ -18,6 +18,11 @@ or
 with updated tsconfig.json
 ```bash
 npm run dev
+```
+
+to run server:
+```bash
+npx json-server persons.json
 ```
 
 ## tirsdag
