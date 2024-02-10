@@ -5,7 +5,8 @@ import morgan from 'morgan';
 import log4js from 'log4js';
 import axios, { AxiosResponse } from 'axios'
 import * as path from 'node:path'
-import { notFound, errorHandler } from './error';
+import { notFound, errorHandler } from './error.js';
+import e from 'express';
 
 //For env File 
 dotenv.config();
@@ -15,11 +16,12 @@ const dbport = process.env.db_PORT || 3000;
 const port = process.env.PORT || 7007;
 
 //middelware 
-app.use(express.static('public'));
+//app.use(express.static('public'));
 app.use(bodyParser.json);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
 
+// url for database api calls
 const dbBaseURL: string = `http://localhost:${dbport}`;
 
 // Middlewar
@@ -32,7 +34,6 @@ app.use(errorHandler);
 
 app.get('/', (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "..", "/public/index.html"))
-  res.send('Welcome to Express & TypeScript Server');
 });
 
 type Person = {
@@ -42,59 +43,65 @@ type Person = {
 }
 
 //get specific person based on Id
-app.get('/persons/:id', async (req: Request, res: Response) => {
+app.get('/persons/:id', async (req: Request, res: Response, next: NextFunction) => {
   const id: string = req.params.id;
   try{
   const response = await axios.get(`${dbBaseURL}/persons/${id}`)
+  console.log(response.data);
+  
   if(response.data){
     const person: Person = response.data;
     res.status(200).send(`Personen med id: ${person.id}, hedder ${person.name} og er ${person.age}`);
+  } else {
+    res.status(404).send('not found')
   }
   } catch(err: unknown){
-    console.log(err);
-    res.status(400).send('person not found');
+    res.status(400).send('Something went comepletely wrong');
+    next(err)
   }
 })
 
 
 //get all
-app.get('/persons', async(req: Request, res: Response) => {
+app.get('/persons', async(req: Request, res: Response, next: NextFunction) => {
   
   try{
     const response: AxiosResponse = await axios.get(`${dbBaseURL}/persons`)
     const personsArray = response.data;
+    console.log(personsArray);
+    
     if(personsArray){
       res.status(200).json(personsArray);
     } else {
       res.status(404).json({ msg: "Could not find persons"})
     }
   } catch(err: unknown){
-    console.log(err)
-    res.status(500).send('server error')
+    next(err);
   }
   
 })
 
 // create a new person
-app.post('/persons', async(req: Request, res: Response) => {
+app.post('/persons', async(req: Request, res: Response, next: NextFunction) => {
 
   const person: Person = req.body;
   try{
     const response: AxiosResponse = await axios.post(`${dbBaseURL}/persons`, person);
+    console.log(response.data);
     if(response){
       res.status(201).json(response.data);
     } else {
       res.status(403).send("looks like you dont have permission to post")
     }
   } catch(err: unknown){
-    console.log(err);
-    res.status(500).send('something went completely wrong')
+    next(err);
+    res.status(404).send('Bad post request')
   }
 })
 
 
 //update a user
-app.put('/persons/:id', async(req: Request, res: Response) =>{
+app.put('/persons/:id', async(req: Request, res: Response, next: NextFunction) =>{
   let person: Person = req.body;
   const id: string = req.params.id;
   try{
@@ -103,8 +110,7 @@ app.put('/persons/:id', async(req: Request, res: Response) =>{
         res.status(204).json(newPerson.data);
       }
   }catch (err: unknown){
-    console.log(err);
-    res.status(500).send('something went complely wrong')
+    next(err);
   }
 })
 

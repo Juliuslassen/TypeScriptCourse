@@ -3,8 +3,8 @@
 ## Indhold
 
 - Julius Lassen
-- Følgende er inkluderet: Express basic, Express routes, Express Handling Forms
-- Følgende er ikke inkluderet: Express Error Handling
+- Følgende er inkluderet: Express basic, Express routes, Express Handling Forms, Express Error Handling
+- Følgende er ikke inkluderet: 
 
 To run:
 ```bash
