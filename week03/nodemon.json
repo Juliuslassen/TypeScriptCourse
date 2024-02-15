@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": "js,json,ts",
+  "ignore": ["node_modules/**/*"],
+    "exec": "tsc -p . && node dist/server.js"
+}
