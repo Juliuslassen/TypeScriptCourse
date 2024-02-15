@@ -9,5 +9,10 @@ export type Address = {
   id: string;
   street: string;
   housenumber: number;
-  residents?: [Person];
+  residents?: Person[];
 };
+
+export type addressWithResidentsId = {
+  personId: string;
+  addressId: string;
+}

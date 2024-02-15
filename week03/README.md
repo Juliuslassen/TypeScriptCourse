@@ -1,10 +1,19 @@
-# Assignment Readme Guidelines
+# Week 3 assignments
 
-## Overview
+## Indhold
 
-- Your name
-- which assignment are included
-- which one are completed and which one are not
+- Julius Lassen
+- Følgende er inkluderet: Ex 1
+- Følgende er ikke inkluderet: Ex 2
 
-## Friday presentation
-- add the friday presentation into the weekly folder
+
+To run:
+cd into api
+```bash
+npm run dev
+```
+
+cd into client
+```bash
+npm run dev
+```
