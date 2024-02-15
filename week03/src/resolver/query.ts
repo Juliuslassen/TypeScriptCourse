@@ -14,7 +14,7 @@ export const Query = {
       }
 
         return addresses.map(() => {
-          residents: persons.filter((person: Person) => person.address?.street === args.street && person.address?.housenumber === args.housenumber)
+          persons.filter((person: Person) => person.address?.street === args.street && person.address?.housenumber === args.housenumber)
         });
     },
 };
