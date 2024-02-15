@@ -1,19 +1,20 @@
 import { Context } from "vm";
-import { persons } from "../data/data.js";
 import { Address, Person } from "./types.js";
 
 export const Query = {
     hello: () => 'Hello world!',
-    persons: () => persons,
-    person: (_parent: undefined, args: Person, _person: Context, _info: any) => {
-      return persons.find((person) => person.name === args.name);
+    persons: (_parent: undefined, args: Person, {persons}: Context) => persons,
+    person: (_parent: undefined, args: Person, {persons}: Context, _info: any) => {
+      return persons.find((person: Person) => person.name === args.name);
     },
     addresses: (_parent: undefined, args: Address, {addresses}: Context, _info: any) => addresses,
-    personWithAddress: (_parent: undefined, args: Address, {addresses}: Context, _info: any) => {
+    personWithAddress: (_parent: undefined, args: Address, {persons , addresses}: Context, _info: any) => {
       if(!args.street){
         throw new Error("no street provided")
       }
 
-        return persons.find((person) => person.address.street === args.street);
+        return addresses.map(() => {
+          persons.find((person: Person) => person.address.street === args.street)
+        });
     },
 };
