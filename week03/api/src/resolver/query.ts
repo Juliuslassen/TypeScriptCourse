@@ -21,15 +21,12 @@ export const Query = {
   ) => addresses,
   address: (
     _parent: undefined,
-    { id }: Address,
+    {id}: Address,
     { addresses }: Context,
     _info: any
   ) => {
     return addresses.find((address: Address) => address.id === id);
   },
-  addressWithResidents: (
-    _parent: undefined,
-    _args: undefined,
-    { persons, addresses }: Context
-  ) => getResidentsOfAddresses,
 };
+
+

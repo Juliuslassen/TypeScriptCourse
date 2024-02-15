@@ -2,12 +2,26 @@
 // graph QL typer
 const typeDefs = `#graphql 
 type Query {
+    """
+        Returns helloworld
+    """
     hello: String
+    """
+    returns all person
+    """
     persons: [Person]
+    """
+    returns a person based on name
+    """
     person(name: String!): Person
+    """
+    returns all address
+    """
     addresses: [Address]
+    """
+    returns a address based on id
+    """
     address(id: ID): Address
-    addressWithResidents: [addressWithPeople]
 }
 type Mutation {
     createPerson(name: String!, age: Int): Person
@@ -29,13 +43,9 @@ type Address {
     id: ID!
     street: String!
     housenumber: Int
-    residents: [Person]
+    residents: [Person!]!
 }
 
-type addressWithPeople {
-    address: Address!
-    residents: [Person]!
-}
 `;
   
 export {typeDefs};

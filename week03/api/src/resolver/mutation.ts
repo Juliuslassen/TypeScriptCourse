@@ -1,41 +1,56 @@
 import { Context } from "vm";
 import { Address, Person } from "./types.js";
+import { GraphQLError } from "graphql";
 
 export const Mutation = {
     createPerson: (_parent:never, args: Person, { persons, addresses }: Context) => {
-      const newPerson = {
+      const newPerson: Person = {
         id: String(persons.length + 1),
         name: args.name,
         age: args.age,
-        addresses: null
+        address: undefined
       };
       persons.push(newPerson);
       return newPerson;
     },
     createAddress: (_parent:never, args: Address, { persons , addresses } : Context) => {
-        const newAddress = {
+        const newAddress: Address = {
             id: String(addresses.length + 1),
             street: args.street,
             housenumber: args.housenumber,
-            persons: null
+            residents: undefined
         }
         addresses.push(newAddress);
         return newAddress;
     },
-    deleteAddress: (_parent:never, {addressId}: {addressId: string}, { addresses }: Context) => {
+    deleteAddress: (_parent:never, { addressId }: {addressId: string}, { addresses }: Context) => {
       const address: Address = addresses.find((address: Address) => address.id = addressId)
       const index: Number = addresses.findIndex((address: Address) => address.id = addressId)
+      
+      console.log(index);
+      if(!index){
+        throw new GraphQLError("address not found")
+      }
 
+      if(index === -1){
+        throw new GraphQLError("false input")
+      }
       if(index){
         addresses.splice(index, 1);
       }
 
       return address;
     },
-    deletePerson: (_parent:never, {personId}: {personId: String}, { persons }: Context) => {
+    deletePerson: (_parent:never, {personId}: {personId: string}, { persons }: Context) => {
       const person: Person = persons.find((person: Person) => person.id === personId);
       const index: Number = persons.findIndex((person: Person) => person.id === personId);
-
+      
+      if(!index){
+        throw new GraphQLError("person not found")
+      }
+      if(index === -1){
+        throw new GraphQLError("false input")
+      }
       if(index){
         persons.splice(index, 1);
       }
@@ -46,7 +61,7 @@ export const Mutation = {
       const address: Address = addresses.find((address: Address) => address.id === addressId);  
       
       if (!person || !address) {
-        throw new Error('Person or Address not found!');
+        throw new GraphQLError('Person or Address not found!');
       }
       
       if (!address.residents) {
@@ -55,7 +70,7 @@ export const Mutation = {
 
       // Check if the person already exists at the address
       if (address.residents.includes(person)) {
-        throw new Error('Person is already associated with this address!');
+        throw new GraphQLError('Person is already associated with this address!');
       }
       
       address.residents.push(person);
@@ -71,7 +86,7 @@ export const Mutation = {
         const indexNumber = addresses.findIndex((resident: Person) => resident.id = person.id)
         address.residents?.splice(indexNumber,1);
       }else {
-        throw new Error('Person not at resident')
+        throw new GraphQLError('Person not at resident')
       }
       return address;
     },

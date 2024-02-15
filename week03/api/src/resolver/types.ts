@@ -1,7 +1,7 @@
 export type Person = {
   id: string;
   name: string;
-  age: number;
+  age?: number;
   address?: Address;
 };
 
@@ -12,7 +12,7 @@ export type Address = {
   residents?: Person[];
 };
 
-export type addressWithResidentsId = {
+export type addressIdWithResidentsId = {
   personId: string;
   addressId: string;
 }
