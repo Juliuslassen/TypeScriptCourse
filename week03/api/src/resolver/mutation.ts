@@ -82,12 +82,14 @@ export const Mutation = {
       const person: Person = persons.find((person: Person) => person.id === personId);
       const address: Address = addresses.find((address: Address) => address.id === addressId);  
 
-      if(addresses.residents){
-        const indexNumber = addresses.findIndex((resident: Person) => resident.id = person.id)
-        address.residents?.splice(indexNumber,1);
-      }else {
+      const indexNumber = addresses.findIndex((resident: Person) => resident.id = person.id)
+      if(indexNumber === -1 || !person || !address){
         throw new GraphQLError('Person not at resident')
       }
+      
+      person.address = undefined;
+      address.residents?.splice(indexNumber, 1);
+      
       return address;
     },
 

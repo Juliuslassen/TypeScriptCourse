@@ -17,3 +17,8 @@ cd into client
 ```bash
 npm run dev
 ```
+
+# Eksempler
+
+![getUserByName](image.png)
+

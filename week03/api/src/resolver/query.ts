@@ -1,6 +1,5 @@
 import { Context } from 'vm';
 import { Address, Person } from './types.js';
-import { getResidentsOfAddresses } from '../data/data.js';
 
 export const Query = {
   hello: () => 'Hello world!',

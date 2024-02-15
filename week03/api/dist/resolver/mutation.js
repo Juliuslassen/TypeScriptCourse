@@ -69,13 +69,12 @@ export const Mutation = {
     removePersonFromAddress: (_parent, { personId, addressId }, { persons, addresses }) => {
         const person = persons.find((person) => person.id === personId);
         const address = addresses.find((address) => address.id === addressId);
-        if (addresses.residents) {
-            const indexNumber = addresses.findIndex((resident) => resident.id = person.id);
-            address.residents?.splice(indexNumber, 1);
-        }
-        else {
+        const indexNumber = addresses.findIndex((resident) => resident.id = person.id);
+        if (indexNumber === -1 || !person || !address) {
             throw new GraphQLError('Person not at resident');
         }
+        person.address = undefined;
+        address.residents?.splice(indexNumber, 1);
         return address;
     },
 };

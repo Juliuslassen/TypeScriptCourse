@@ -16,14 +16,3 @@ export const persons = [
         age: 18,
     },
 ];
-export const getResidentsOfAddresses = () => {
-    { /*return addresses.map((address) => ({
-      address,
-      residents: persons.filter((person) => address.persons?.includes(person.id))
-    }));*/
-    }
-    return persons.map(person => {
-        const personAddresses = addresses.filter(address => address.residents.includes(person.id));
-        return { person, addresses: personAddresses };
-    });
-};
