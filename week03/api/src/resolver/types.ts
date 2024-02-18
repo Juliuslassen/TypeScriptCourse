@@ -3,6 +3,7 @@ export type Person = {
   name: string;
   age?: number;
   address?: Address;
+  imageUrl?: string;
 };
 
 export type Address = {

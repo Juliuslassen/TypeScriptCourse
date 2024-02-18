@@ -24,7 +24,7 @@ type Query {
     address(id: ID): Address
 }
 type Mutation {
-    createPerson(name: String!, age: Int): Person
+    createPerson(name: String!, age: Int, imageUrl: String): Person
     createAddress(street: String!, housenumber: Int): Address
     deleteAddress(addressId: String!): Address
     deletePerson(personId: String!): Person
@@ -36,6 +36,7 @@ type Person {
     id: ID!
     name: String!
     age: Int
+    imageUrl: String!
     address: Address
 }
 

@@ -1,35 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.css';
+import { Person, Address } from '../../api/src/resolver/types';
+import { useQuery, gql, useMutation } from '@apollo/client';
+import CreateNewPerson from './components/CreateNewPerson';
+
+const GET_PERSONS = gql`
+  query GetPersons {
+    persons {
+      id
+      name
+      age
+      imageUrl
+    }
+  }
+`;
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const { loading, error, data } = useQuery(GET_PERSONS);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :{error.message}</p>;
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        {data.persons.map((person: Person) => (
+          <div key={person.id}>
+            <div>
+              name: {person.name} & age: {person.age}
+            </div>
+            <div>{person.imageUrl}</div>
+          </div>
+        ))}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <CreateNewPerson></CreateNewPerson>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

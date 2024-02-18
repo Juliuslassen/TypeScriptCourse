@@ -3,8 +3,8 @@
 ## Indhold
 
 - Julius Lassen
-- Følgende er inkluderet: Ex 1
-- Følgende er ikke inkluderet: Ex 2
+- Følgende er inkluderet: Ex 1, Ex 2
+- Følgende er ikke inkluderet:
 
 
 To run:

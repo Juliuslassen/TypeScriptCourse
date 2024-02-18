@@ -8,6 +8,7 @@ export const Mutation = {
         id: String(persons.length + 1),
         name: args.name,
         age: args.age,
+        imageUrl: args.imageUrl,
         address: undefined
       };
       persons.push(newPerson);
