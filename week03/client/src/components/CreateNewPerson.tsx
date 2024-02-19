@@ -1,6 +1,5 @@
 import { useQuery, gql, useMutation } from '@apollo/client';
-import { Person } from '../../api/src/resolver/types';
-import { FormHTMLAttributes, useState } from 'react';
+import { useState } from 'react';
 
 const ADD_PERSON = gql`
   mutation createPerson($name: String!, $age: Int, $imageUrl: String) {
@@ -9,17 +8,21 @@ const ADD_PERSON = gql`
       name
       age
       imageUrl
-      address
     }
   }
 `;
 
-function CreateNewPerson() {
+function CreateNewPerson( {GET_PERSONS} ) {
+  const [createPerson, { data, loading, error }] = useMutation(ADD_PERSON, { refetchQueries:[
+    {query: GET_PERSONS}
+  ]});
+
   const [personData, setPersonData] = useState({
     name: '',
-    age: '',
+    age: 0,
     imageUrl: '',
   });
+  const ageAsString = personData.age.toString;
 
   const handlePersonDataChange = (e) => {
     const { name, value } = e.target;
@@ -29,18 +32,22 @@ function CreateNewPerson() {
     }));
   };
 
-  const handleSubmitPersonData = (e) => {
-    e.preventDefault();
-    createPerson({ variables: personData });
+  const handleSubmitPersonData = () => {
+    createPerson({
+      variables: {
+        name: personData.name,
+        age: ageAsString,
+        imageUrl: personData.imageUrl,
+      },
+    });
 
     setPersonData({
       name: '',
-      age: '',
+      age: 0,
       imageUrl: '',
     });
   };
 
-  const [createPerson, { data, loading, error }] = useMutation(ADD_PERSON);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :{error.message} </p>;
 
@@ -65,7 +72,7 @@ function CreateNewPerson() {
             name="age"
             value={personData.age}
             onChange={handlePersonDataChange}
-            placeholder="69"
+            
           />
         </div>
 
@@ -79,7 +86,11 @@ function CreateNewPerson() {
             placeholder=".png"
           />
         </div>
-
+        <br />
+        <br />
+        <p>newpersons data: </p>
+        <br />
+        <p> name:{personData.name}, age: {personData.age}, image: {personData.imageUrl} </p>
         <button type="submit">create person</button>
       </form>
     </>

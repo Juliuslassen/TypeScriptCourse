@@ -31,7 +31,7 @@ function App() {
         ))}
       </div>
 
-      <CreateNewPerson></CreateNewPerson>
+      <CreateNewPerson GET_PERSONS={GET_PERSONS}></CreateNewPerson>
     </>
   );
 }
