@@ -12,6 +12,9 @@
 .idea/**/dictionaries
 .idea/**/shelf
 
+# dependencies
+/node_modules
+
 # AWS User-specific
 .idea/**/aws.xml
 
@@ -138,5 +141,3 @@ buildNumber.properties
 
 #enviroment file
 .env
-
-node_modules
