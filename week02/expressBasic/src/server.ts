@@ -6,7 +6,6 @@ import log4js from 'log4js';
 import axios, { AxiosResponse } from 'axios'
 import * as path from 'node:path'
 import { notFound, errorHandler } from './error.js';
-import e from 'express';
 
 //For env File 
 dotenv.config();
@@ -46,9 +45,7 @@ type Person = {
 app.get('/persons/:id', async (req: Request, res: Response, next: NextFunction) => {
   const id: string = req.params.id;
   try{
-  const response = await axios.get(`${dbBaseURL}/persons/${id}`)
-  console.log(response.data);
-  
+  const response = await axios.get(`${dbBaseURL}/persons/${id}`)  
   if(response.data){
     const person: Person = response.data;
     res.status(200).send(`Personen med id: ${person.id}, hedder ${person.name} og er ${person.age}`);
@@ -65,10 +62,18 @@ app.get('/persons/:id', async (req: Request, res: Response, next: NextFunction) 
 //get all
 app.get('/persons', async(req: Request, res: Response, next: NextFunction) => {
   
+  axios.get(`${dbBaseURL}/persons`)
+  .then((respons) => {
+    res.status(200).json(respons.data);
+  })
+  .catch((error: unknown) => {
+    next(error);
+  })
+
+  {/*
   try{
     const response: AxiosResponse = await axios.get(`${dbBaseURL}/persons`)
     const personsArray = response.data;
-    console.log(personsArray);
     
     if(personsArray){
       res.status(200).json(personsArray);
@@ -78,7 +83,7 @@ app.get('/persons', async(req: Request, res: Response, next: NextFunction) => {
   } catch(err: unknown){
     next(err);
   }
-  
+*/}
 })
 
 // create a new person
@@ -87,7 +92,6 @@ app.post('/persons', async(req: Request, res: Response, next: NextFunction) => {
   const person: Person = req.body;
   try{
     const response: AxiosResponse = await axios.post(`${dbBaseURL}/persons`, person);
-    console.log(response.data);
     if(response){
       res.status(201).json(response.data);
     } else {
@@ -125,7 +129,6 @@ type User = {
 app.post('/users', async(req: Request, res: Response, next: NextFunction) => {
   try{
     let user = req.query;
-     console.log(user);
      res.status(200).json({
       msg: "works",
       user
