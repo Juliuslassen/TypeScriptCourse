@@ -1,6 +1,8 @@
-import { ObjectId } from 'mongoose'
+import { ObjectId } from "mongodb";
 
-export type Author = {
+
+export interface Author {
+    _id: ObjectId,
     name: string,
     age: number,
     books?: [ObjectId?],

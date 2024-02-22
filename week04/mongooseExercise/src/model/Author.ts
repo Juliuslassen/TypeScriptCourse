@@ -3,6 +3,7 @@ import { Author } from '../types/Author';
 const { Schema } = mongoose;
 
 const authorSchema = new Schema<Author>({
+  
   name: {
     type: String,
     require: true,
@@ -26,6 +27,11 @@ authorSchema.pre('save', function(next) {
   } 
   next();
 });
+
+authorSchema.post('save', async function (doc) {
+  await doc.populate('books');
+});
+
 
 //use the post middleware to populate the books property of the 
 //Author model after saving it to the database. Why? 

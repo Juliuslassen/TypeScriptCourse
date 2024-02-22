@@ -1,6 +1,8 @@
-import { ObjectId } from "mongoose"
+import { ObjectId } from "mongodb";
 
-export type Library = {
+
+export interface Library  {
+    _id: ObjectId,
     name: string,
     books?: [ObjectId?],
     createdAt?: Date
