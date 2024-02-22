@@ -5,6 +5,6 @@ export interface Author {
     _id: ObjectId,
     name: string,
     age: number,
-    books?: [ObjectId?],
+    books?: [ObjectId],
     createdAt?: Date 
 }

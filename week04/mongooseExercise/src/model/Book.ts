@@ -2,6 +2,8 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 import { Genre } from '../types/GenreEnum'
 import { Book } from '../types/Book';
+import { AuthorModel } from './Author';
+import { LibraryModel } from './Library';
 
 
 const bookSchema = new mongoose.Schema({
@@ -53,12 +55,27 @@ bookSchema.post('save', async function(doc, next) {
     const libraryId = this.library;
     const bookId = this._id;
 
-    if( ) {
+    if(authorId && libraryId && bookId) {
+      const author = await AuthorModel.findById(authorId);
+      const library = await LibraryModel.findById(libraryId);
+
+      if(author && library) {
+        author.books?.push(bookId);
+        library.books?.push(bookId);
+        await author.save();
+        await library.save();
+      }
       
     }
+    next();
+
+  } catch(error) {
+    next(error);
+  }
 
   }
-})
+)
+
 
 
 

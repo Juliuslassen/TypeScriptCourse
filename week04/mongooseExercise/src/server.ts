@@ -42,9 +42,9 @@ async function run() {
   try{
       await mongoose.connect(uri);
       
-      //  await AuthorModel.create(testAuther);
+      //await AuthorModel.create(testAuther);
       
-      //  await LibraryModel.create(testLibrary);
+      //await LibraryModel.create(testLibrary);
 
 
       const authours: Author[] = await AuthorModel.find({});
@@ -57,21 +57,17 @@ async function run() {
         
         title: "godbog",
         author: authours[0]._id,
-        library: Library[0]._id!,
+        library: Library[0]._id,
         pages: 12,
         genre: Genre.FANTASY,
         createdAt: undefined
       }
 
-      //  await BookModel.create(testBook);
-      //const Books: Book[] = await BookModel.find({});
-      //console.log(Books);
+       //await BookModel.create(testBook);
+      
     
-    //console.log("new section");
-    // //addBookToAuthor(authours[0] , "godbog")
-    // console.log(await AuthorModel.findById(authours[0]._id));
     
-    // console.log(await BookModel.findById(Books[0]._id));
+     console.log(await BookModel.find({title: "godbog"}));
     
   } catch(e){
     console.log(e);
