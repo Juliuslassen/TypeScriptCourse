@@ -2,11 +2,14 @@ import mongoose, { Model } from 'mongoose';
 import { Author } from '../types/Author';
 const { Schema } = mongoose;
 
-interface autherModel extends Model<Author> {
-  getAuthorsWithTwoOrMoreBooks(): Number;
+interface AutherModel extends Model<Author> {
+  getAuthorsWithTwoOrMoreBooks(): Author;
 }
 
-const authorSchema = new mongoose.Schema<Author>({
+
+
+
+const authorSchema = new mongoose.Schema<Author, AutherModel>({
   
   name: {
     type: String,
@@ -37,8 +40,8 @@ authorSchema.post('save', async function (doc) {
 });
 
 authorSchema.static('getAuthorsWithTwoOrMoreBooks', function getAuthorsWithTwoOrMoreBooks(){
-  if(this.books.length){
-    
+  if(this.books.length > 2){
+    return this;
   }
 })
 
@@ -52,4 +55,4 @@ authorSchema.post('save', async function(doc, next) {
   next();
 })
 
-export const AuthorModel = mongoose.model('AuthorSchema', authorSchema);
+export const AuthorModel = mongoose.model<Author, AutherModel>('AuthorSchema', authorSchema);
