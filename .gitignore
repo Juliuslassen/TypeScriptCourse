@@ -138,3 +138,5 @@ buildNumber.properties
 
 #enviroment file
 .env
+
+node_modules
