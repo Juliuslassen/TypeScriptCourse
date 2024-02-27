@@ -1,5 +1,6 @@
 import './App.css'
-import { GetUsers } from './components/UserComponent'
+import { JLComponent } from './components/JLComponent'
+import { GetUsers } from './components/TTComponent'
 
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
   return (
     <>
       <GetUsers />
+      <JLComponent />
     </>
   )
 }
