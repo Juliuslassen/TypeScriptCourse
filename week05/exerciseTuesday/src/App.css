@@ -69,6 +69,21 @@
   color: #4400ff;
 }
 
+.grid {
+  display: grid;
+  grid-template-columns: auto auto; /* Adjust the column widths as needed */
+  align-items: center; /* Vertically center items */
+}
+
+.grid label {
+  margin-right: 3px; /* Adjust the spacing between the label and checkbox */
+}
+
+/* Additional styling for checkbox */
+.grid input[type="checkbox"] {
+  margin-right: 1px; /* Adjust the spacing between the checkbox and label */
+}
+
 .task-item:hover {
   background-color: #e0e0e0;
 }
@@ -83,7 +98,7 @@ h2 {
 }
 
 form {
-  background-color: #a6e511;
+  background-color: #dde8c3;
   padding: 20px;
   border-radius: 5px;
 }
@@ -116,7 +131,7 @@ button {
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #29e733;
 }
 
 button:active {
@@ -128,4 +143,70 @@ input[type="text"]:focus,
 input[type="number"]:focus {
   outline: none; /* Remove default input outline */
   border-color: #007bff; /* Change border color on focus */
+}
+
+/* Modal Container */
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(174, 154, 154, 0.5);
+  overflow: auto;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #2ac3f5;
+  margin: 10% auto; /* 10% from the top and centered */
+  padding: 20px;
+  border: 5px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  border-radius: 8px;
+}
+
+/* Modal Title */
+.modal-title {
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+}
+
+/* Form Group */
+.form-group {
+  margin-bottom: 16px;
+}
+
+/* Form Control */
+.form-control {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Modal Buttons */
+.modal-buttons {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Button Styles */
+.btn {
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #2ac3f5;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
 }
