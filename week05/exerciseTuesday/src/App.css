@@ -72,3 +72,60 @@
 .task-item:hover {
   background-color: #e0e0e0;
 }
+
+.form-container {
+  width: 300px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+}
+
+form {
+  background-color: #a6e511;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #000000;
+}
+
+input[type="text"],
+input[type="number"],
+button {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box; /* Ensure padding and border don't add to width */
+  margin-top: 5px;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  background-color: #3e8e41;
+  outline: none; /* Remove default button outline */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+  outline: none; /* Remove default input outline */
+  border-color: #007bff; /* Change border color on focus */
+}

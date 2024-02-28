@@ -15,9 +15,15 @@ export const tasksData: ITask[] = [
         completed: false
     },
     {
-        name: "feed Jack",
-        description: "get jack some food",
-        timeEstimation: 1.5,
+        name: "wauw",
+        description: "wauw",
+        timeEstimation: 9,
         completed: false
+    },
+    {
+        name: "Write code",
+        description: "finish the code exercise",
+        timeEstimation: 3,
+        completed: true
     }
 ]

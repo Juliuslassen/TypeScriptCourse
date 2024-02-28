@@ -1,12 +1,12 @@
 import './App.css'
-import TaskComponent from './components/TaskComponent'
+import TaskLayout from './components/TaskLayout'
 
 function App() {
   
 
   return (
     <>
-      <TaskComponent /> 
+      <TaskLayout /> 
     </>
   )
 }

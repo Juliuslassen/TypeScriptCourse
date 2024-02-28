@@ -7,6 +7,7 @@ export const JLComponent: React.FC = () => {
      const { users }: { users: User[] } = useUserHook();
 
     return (
+        <>
         <div className="user-list-container">
         <h2 className="user-list-heading">User List</h2>
         <ul className="user-list">
@@ -15,6 +16,7 @@ export const JLComponent: React.FC = () => {
             ))}
         </ul>
     </div>
+    </>
     );
 };
 
