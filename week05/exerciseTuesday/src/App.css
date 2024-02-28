@@ -40,3 +40,35 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.task-list-container {
+  font-family: Arial, sans-serif;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  width: 300px;
+  margin: 0 auto;
+  
+}
+
+.task-list-heading {
+  color: #ff0000;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  margin-bottom: 8px;
+  padding: 8px;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  color: #4400ff;
+}
+
+.task-item:hover {
+  background-color: #e0e0e0;
+}
