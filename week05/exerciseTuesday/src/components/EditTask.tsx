@@ -26,26 +26,16 @@ const EditTask: React.FC<ITask> = ({
   const handleTaskChangeSUBMIT = (e) => {
     e.preventDefault();
 
-    const newTask: ITask = {
+    const updatedTask: ITask = {
       name: formData.name,
       description: formData.description,
       timeEstimation: parseFloat(formData.timeEstimation),
       completed: false,
     };
 
-    setTasks([...tasks, newTask]);
-
-    clearFormData();
     closeModal(); // Close the modal after submitting
   };
 
-  const clearFormData = () => {
-    setFormData({
-      name: '',
-      description: '',
-      timeEstimation: '',
-    });
-  };
 
   return (
     <>

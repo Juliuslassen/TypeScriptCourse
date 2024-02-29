@@ -7,3 +7,4 @@ export const createTask = (name: string, decription: string, timeEstimation: num
         completed: false
     };
 }
+

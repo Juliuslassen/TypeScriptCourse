@@ -4,11 +4,13 @@ import useTaskData from '../utility/useTaskData';
 import TaskAddForm from './TaskAddForm';
 import Task from './Task';
 import EditTask from './EditTask';
+import { TaskManager } from '../manager/Manager';
 
 const TaskLayout = () => {
   const { tasks, setTasks }: { tasks: ITask[] } = useTaskData();
-  const [showModal, setShowModal ] = useState<boolean>();
-  const [ selectedTask, setSelectedTask ] = useState<ITask>()
+  const taskManager = TaskManager();
+  const [showModal, setShowModal] = useState<boolean>();
+  const [selectedTask, setSelectedTask] = useState<ITask>();
 
   const openModal = () => {
     setShowModal(true);
@@ -20,21 +22,19 @@ const TaskLayout = () => {
 
   return (
     <>
-        <p>show modal: {showModal ? "true" : "false"}</p>
-        {/*<EditTask
-          task={tasks}
-          setTasks={setTasks}
-          openModal={openModal}
-          closeModal={closeModal}
-          selectedTask={selectedTask}
-        />*/}
+      <div className="grid">
+        <div>
+          <TaskAddForm tasks={tasks} setTasks={setTasks} />
+        </div>
 
-      <div>
-        <Task tasks={tasks} setTasks={setTasks} openModal={openModal}  setSelectedTask={setSelectedTask} />
-      </div>
-
-      <div>
-        <TaskAddForm tasks={tasks} setTasks={setTasks} />
+        <div className="task-grid">
+          <Task
+            tasks={tasks}
+            setTasks={setTasks}
+            openModal={openModal}
+            setSelectedTask={setSelectedTask}
+          />
+        </div>
       </div>
 
       {showModal && (
@@ -46,7 +46,6 @@ const TaskLayout = () => {
           selectedTask={selectedTask}
         />
       )}
-
     </>
   );
 };

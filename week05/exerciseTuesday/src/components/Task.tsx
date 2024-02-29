@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ITask, TaskArray } from '../types/TaskType';
 
 const Task: React.FC<TaskArray> = ({ tasks , setTasks, openModal, setSelectedTask}) => {
@@ -19,6 +19,12 @@ const Task: React.FC<TaskArray> = ({ tasks , setTasks, openModal, setSelectedTas
     const editingTask = tasks[index];
     setSelectedTask(editingTask); // Set the selected task
     openModal(); // Open the modal
+  }
+
+  const handleRemoveTask = (index: number) => () => {
+    // Create a new array without the removed task
+    const updatedTasks = tasks.filter((task, i) => i !== index);
+    setTasks(updatedTasks)
   }
 
   return (
@@ -48,8 +54,8 @@ const Task: React.FC<TaskArray> = ({ tasks , setTasks, openModal, setSelectedTas
                 />
               </div>
               <div>
-                
-              <button onClick={handleOpenModalAndSetTask(index)}>Click here to change task</button>
+                <button onClick={handleRemoveTask(index)} className='btn-danger'>Remove task</button>
+              <button onClick={handleOpenModalAndSetTask(index)} className='btn-secondary'>Click here to change task</button>
           </div>
             </li>
           ))}
