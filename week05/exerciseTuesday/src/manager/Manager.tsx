@@ -1,11 +1,9 @@
 import { ITask } from "../types/TaskType";
-import { createTask } from "../utility/createTask";
 import useTaskData from "../utility/useTaskData";
-
 
 const taskManager = (() => {
     let tasks: ITask[] = [];
-    tasks = useTaskData().tasks;
+    
     return {
         getTasks: () => tasks,
         addTask: (task: ITask) => {
@@ -16,6 +14,11 @@ const taskManager = (() => {
         },
         updateTask: (task: ITask, newTask: ITask) => {
             tasks = tasks.map((t) => (t === task ? newTask : t));
+        },
+        markTaskAsCompleted: (task: ITask) => {
+            tasks = tasks.map((t) => (t === task ? { ...t, completed: true } : t));
         }
     };
 })();
+
+export default taskManager;

@@ -1,17 +1,11 @@
 import { useState } from 'react';
 import { ITask } from '../types/TaskType';
+import { TaskProps } from '../types/TaskProp';
 
-const EditTask: React.FC<ITask> = ({
-  tasks,
-  setTasks,
-  showModal,
-  closeModal,
-  selectedTask
-}) => {
-
+const EditTask: React.FC<TaskProps> = ({ manager, showModal, closeModal, selectedTask }) => {
   const [formData, setFormData] = useState({
     name: selectedTask.name,
-    description: selectedTask.decription,
+    description: selectedTask.description,
     timeEstimation: selectedTask.timeEstimation,
   });
 
@@ -27,15 +21,16 @@ const EditTask: React.FC<ITask> = ({
     e.preventDefault();
 
     const updatedTask: ITask = {
-      name: formData.name,
-      description: formData.description,
-      timeEstimation: parseFloat(formData.timeEstimation),
+      name: formData.name!,
+      description: formData.description!,
+      timeEstimation: parseFloat(formData.timeEstimation), // parseFloat() is used to convert a string to a number
       completed: false,
     };
 
+    manager.updateTask(selectedTask, updatedTask);
+
     closeModal(); // Close the modal after submitting
   };
-
 
   return (
     <>
@@ -71,10 +66,10 @@ const EditTask: React.FC<ITask> = ({
               <div className="form-group">
                 <label htmlFor="timeEstimation">estimated time</label>
                 <input
-                  type="text"
+                  type="number"
                   name="timeEstimation"
                   value={formData.timeEstimation}
-                  placeholder={selectedTask.timeEstimation}
+                  placeholder={selectedTask.timeEstimation.toString()}
                   onChange={handleFormDataChange}
                   className="form-control"
                 />

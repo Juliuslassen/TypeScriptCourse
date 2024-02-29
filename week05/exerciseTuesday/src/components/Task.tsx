@@ -1,30 +1,24 @@
 import React from 'react';
 import { ITask, TaskArray } from '../types/TaskType';
 
-const Task: React.FC<TaskArray> = ({ tasks , setTasks, openModal, setSelectedTask}) => {
+const Task: React.FC<TaskArray> = ({ index, manager, openModal, setSelectedTask, task}) => {
+  
   
   const handleCompletedChange = (index: number) => {
-    // Create a new array with the updated task
-    const updatedTasks = tasks.map((task, i) => {
-      if (i === index) {
-        return { ...task, completed: !task.completed };
-      }
 
-      return task;
-    });
-    setTasks(updatedTasks)
+    const update = manager.markTaskAsCompleted(task[index]);
+    console.log(update);
   };
 
   const handleOpenModalAndSetTask = (index: number) => () => {
-    const editingTask = tasks[index];
-    setSelectedTask(editingTask); // Set the selected task
+    
+    setSelectedTask(task[index]); // Set the selected task
     openModal(); // Open the modal
   }
 
   const handleRemoveTask = (index: number) => () => {
     // Create a new array without the removed task
-    const updatedTasks = tasks.filter((task, i) => i !== index);
-    setTasks(updatedTasks)
+    manager.deleteTask(task[index]);
   }
 
   return (
@@ -32,9 +26,7 @@ const Task: React.FC<TaskArray> = ({ tasks , setTasks, openModal, setSelectedTas
       <div className="task-list-container">
         <h2 className="task-list-heading">Tasks</h2>
         <ul className="task-list">
-          {tasks.map((task: ITask, index: number) => (
-            <li key={task.name} className="task-item">
-              <h1>Task {index + 1}</h1>
+              <h1>Task {index}</h1>
               <div> name: {task.name} </div>
               <div> description: {task.description} </div>
               <div> Is task done?: {task.completed ? 'Yes' : 'No'} </div>
@@ -57,8 +49,7 @@ const Task: React.FC<TaskArray> = ({ tasks , setTasks, openModal, setSelectedTas
                 <button onClick={handleRemoveTask(index)} className='btn-danger'>Remove task</button>
               <button onClick={handleOpenModalAndSetTask(index)} className='btn-secondary'>Click here to change task</button>
           </div>
-            </li>
-          ))}
+            
         </ul>
       </div>
     </>

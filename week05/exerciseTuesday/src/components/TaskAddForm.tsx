@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ITask } from "../types/TaskType";
 
-const TaskAddForm = ({tasks, setTasks}) => {
+const TaskAddForm = ({ manager }) => {
 
     const [ formData, setFormData ] = useState({
         name: '',
@@ -27,8 +27,8 @@ const TaskAddForm = ({tasks, setTasks}) => {
             completed: false
         }
 
-        setTasks([...tasks, newTask]);
-
+        manager.addTask(newTask);
+  
         clearFormData();
     }
 
