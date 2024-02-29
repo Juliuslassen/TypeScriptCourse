@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ITask } from "../types/TaskType";
 
-const TaskAddForm = ({ manager }) => {
+const TaskAddForm: React.FC = ({ manager }) => {
 
     const [ formData, setFormData ] = useState({
         name: '',

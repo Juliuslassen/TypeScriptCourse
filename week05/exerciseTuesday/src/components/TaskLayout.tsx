@@ -6,14 +6,12 @@ import Task from './Task';
 import EditTask from './EditTask';
 import taskManager from '../manager/Manager';
 
-const TaskLayout = () => {
+const TaskLayout: React.FC = () => {
   const manager = taskManager;
 
   const { tasks }: { tasks: ITask[] } = useTaskData();
   if (manager.getTasks().length === 0) {
-    for (let i = 0; i < tasks.length; i++) {
-      manager.addTask(tasks[i]);
-    }
+    manager.setTasks(tasks);
   }
 
   const [taskList, setTaskList] = useState<ITask[]>(manager.getTasks());
@@ -31,6 +29,7 @@ const TaskLayout = () => {
   
   const closeModal = () => {
     setShowModal(false);
+    
   };
 
   return (

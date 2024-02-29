@@ -17,7 +17,10 @@ const taskManager = (() => {
         },
         markTaskAsCompleted: (task: ITask) => {
             tasks = tasks.map((t) => (t === task ? { ...t, completed: true } : t));
-        }
+        },
+        setTasks(newTasks: ITask[]): void {
+            tasks = newTasks;
+        },
     };
 })();
 

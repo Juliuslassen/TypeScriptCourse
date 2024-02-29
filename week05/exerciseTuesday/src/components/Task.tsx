@@ -1,24 +1,22 @@
-import React from 'react';
-import { ITask, TaskArray } from '../types/TaskType';
 
-const Task: React.FC<TaskArray> = ({ index, manager, openModal, setSelectedTask, task}) => {
+const Task: React.FC = ({ index, manager, openModal, setSelectedTask, task}) => {
   
   
-  const handleCompletedChange = (index: number) => {
+  const handleCompletedChange = () => {
 
-    const update = manager.markTaskAsCompleted(task[index]);
-    console.log(update);
+    manager.markTaskAsCompleted(task);
+    
   };
 
-  const handleOpenModalAndSetTask = (index: number) => () => {
+  const handleOpenModalAndSetTask = () => {
     
-    setSelectedTask(task[index]); // Set the selected task
+    setSelectedTask(task); // Set the selected task
     openModal(); // Open the modal
   }
 
-  const handleRemoveTask = (index: number) => () => {
+  const handleRemoveTask = ()  => {
     // Create a new array without the removed task
-    manager.deleteTask(task[index]);
+    manager.deleteTask(task);
   }
 
   return (
@@ -42,12 +40,12 @@ const Task: React.FC<TaskArray> = ({ index, manager, openModal, setSelectedTask,
                   name={`checkbox-${index}`}
                   id={`checkbox-${index}`}
                   checked={task.completed}
-                  onChange={() => handleCompletedChange(index)}
+                  onChange={() => handleCompletedChange}
                 />
               </div>
               <div>
-                <button onClick={handleRemoveTask(index)} className='btn-danger'>Remove task</button>
-              <button onClick={handleOpenModalAndSetTask(index)} className='btn-secondary'>Click here to change task</button>
+                <button onClick={handleRemoveTask} className='btn-danger'>Remove task</button>
+              <button onClick={handleOpenModalAndSetTask} className='btn-secondary'>Click here to change task</button>
           </div>
             
         </ul>
