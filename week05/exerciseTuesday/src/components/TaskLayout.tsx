@@ -14,13 +14,47 @@ const TaskLayout: React.FC = () => {
     manager.setTasks(tasks);
   }
 
-  const [taskList, setTaskList] = useState<ITask[]>(manager.getTasks());
+  const [ showModal, setShowModal ] = useState<boolean>();
+  const [ selectedTask, setSelectedTask ] = useState<ITask>();
+
+  const [ formData, setFormData ] = useState({
+    name: '',
+    description: '',
+    timeEstimation: ''
+})
+
+const handleFormDataChange = (e) => {
+  const { name, value } = e.target;
+    setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+    }));
+};
+
+const handleFormDataSUBMIT = (e) => {
+    e.preventDefault();
+
+    const newTask: ITask = {
+        name: formData.name,
+        description: formData.description,
+        timeEstimation: parseFloat(formData.timeEstimation),
+        completed: false
+    }
+
+    manager.addTask(newTask);
+    
+    setFormData({
+      name: '',
+      description: '',
+      timeEstimation: ''
+  })
+}
+
+
+  const [taskList, setTaskList] = useState<ITask[]>([]);
   useEffect(() => {
     setTaskList(manager.getTasks());
-  }, []); 
-
-  const [showModal, setShowModal] = useState<boolean>();
-  const [selectedTask, setSelectedTask] = useState<ITask>();
+  }, [showModal, selectedTask, formData, manager]); 
 
   const openModal = () => {
     setShowModal(true);
@@ -29,7 +63,6 @@ const TaskLayout: React.FC = () => {
   
   const closeModal = () => {
     setShowModal(false);
-    
   };
 
   return (
@@ -38,7 +71,7 @@ const TaskLayout: React.FC = () => {
         <h1>Task Manager</h1>
         <p> showmodal: {showModal} && selectedTask {selectedTask?.name}</p>
         <div>
-          <TaskAddForm manager={manager} />
+          <TaskAddForm formData={formData} handleFormDataChange={handleFormDataChange} handleFormDataSUBMIT={handleFormDataSUBMIT} />
         </div>
 
         <div className="task-grid">

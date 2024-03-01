@@ -175,6 +175,10 @@ input[type="number"]:focus {
   margin-bottom: 16px;
 }
 
+.checkbox {
+  color: #f6ff00;
+}
+
 /* Form Control */
 .form-control {
   width: 100%;

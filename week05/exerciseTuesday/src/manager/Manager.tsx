@@ -1,5 +1,4 @@
 import { ITask } from "../types/TaskType";
-import useTaskData from "../utility/useTaskData";
 
 const taskManager = (() => {
     let tasks: ITask[] = [];
