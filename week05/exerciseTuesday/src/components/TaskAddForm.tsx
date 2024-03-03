@@ -1,45 +1,6 @@
-import { useState } from "react";
-import { ITask } from "../types/TaskType";
 
-const TaskAddForm = ({tasks, setTasks}) => {
-
-    const [ formData, setFormData ] = useState({
-        name: '',
-        description: '',
-        timeEstimation: ''
-    })
-
-    const handleFormDataChange = (e) => {
-      const { name, value } = e.target;
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
-
-    const handleFormDataSUBMIT = (e) => {
-        e.preventDefault();
-
-        const newTask: ITask = {
-            name: formData.name,
-            description: formData.description,
-            timeEstimation: parseFloat(formData.timeEstimation),
-            completed: false
-        }
-
-        setTasks([...tasks, newTask]);
-
-        clearFormData();
-    }
-
-    const clearFormData = () => {
-        setFormData({
-            name: '',
-            description: '',
-            timeEstimation: ''
-        })
-    }
-
+const TaskAddForm: React.FC = ({ formData, handleFormDataChange ,handleFormDataSUBMIT }) => {
+    
     return ( 
         <>
         <div className="task-list-container">

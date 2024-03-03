@@ -1,24 +1,33 @@
-import React, { useState } from 'react';
-import { ITask, TaskArray } from '../types/TaskType';
+import React, { useEffect, useState } from 'react';
+import { ITask } from '../types/TaskType';
 
-const Task: React.FC<TaskArray> = ({ tasks , setTasks, openModal, setSelectedTask}) => {
-  
-  const handleCompletedChange = (index: number) => {
-    // Create a new array with the updated task
-    const updatedTasks = tasks.map((task, i) => {
-      if (i === index) {
-        return { ...task, completed: !task.completed };
-      }
+const Task: React.FC = ({
+  index,
+  manager,
+  openModal,
+  setSelectedTask,
+  task,
+  handleRemoveTask
+}) => {
 
-      return task;
-    });
-    setTasks(updatedTasks)
+  const [specificTask, setSpecificTask] = useState<ITask>(manager.getSpecificTask(task));
+
+  useEffect(() => {
+    setSpecificTask(manager.getSpecificTask(task));
+  }, [task, manager]);
+
+  const handleCompletedChange = () => {
+    setSpecificTask({ ...specificTask, completed: !specificTask.completed });
+    manager.markTaskAsCompleted(specificTask);
   };
 
-  const handleOpenModalAndSetTask = (index: number) => () => {
-    const editingTask = tasks[index];
-    setSelectedTask(editingTask); // Set the selected task
+  const handleOpenModalAndSetTask = () => {
+    setSelectedTask(specificTask); // Set the selected task
     openModal(); // Open the modal
+  };
+
+  const removeTask = () => {
+    handleRemoveTask(specificTask);
   }
 
   return (
@@ -26,33 +35,38 @@ const Task: React.FC<TaskArray> = ({ tasks , setTasks, openModal, setSelectedTas
       <div className="task-list-container">
         <h2 className="task-list-heading">Tasks</h2>
         <ul className="task-list">
-          {tasks.map((task: ITask, index: number) => (
-            <li key={task.name} className="task-item">
-              <h1>Task {index + 1}</h1>
-              <div> name: {task.name} </div>
-              <div> description: {task.description} </div>
-              <div> Is task done?: {task.completed ? 'Yes' : 'No'} </div>
-              {task.completed ? (
-                <div></div>
-              ) : (
-                <div> time estimation: {task.timeEstimation} hours </div>
-              )}
-              <div className='grid'>
-                <label htmlFor={`checkbox-${index}`}>Mark as completed</label>
-                <input
-                  type="checkbox"
-                  name={`checkbox-${index}`}
-                  id={`checkbox-${index}`}
-                  checked={task.completed}
-                  onChange={() => handleCompletedChange(index)}
-                />
-              </div>
-              <div>
-                
-              <button onClick={handleOpenModalAndSetTask(index)}>Click here to change task</button>
+          <h1>Task {index}</h1>
+          <div> name: {specificTask.name} </div>
+          <div> description: {specificTask.description} </div>
+          <div> Is task done?: {specificTask.completed ? 'Yes' : 'No'} </div>
+          {specificTask.completed ? (
+            <div></div>
+          ) : (
+            <div> time estimation: {specificTask.timeEstimation} hours </div>
+          )}
+          <div className="grid">
+            <label htmlFor={`checkbox-${index}`} className="checkbox">
+              Mark as completed
+            </label>
+            <input
+              type="checkbox"
+              name={`checkbox-${index}`}
+              id={`checkbox-${index}`}
+              checked={specificTask.completed}
+              onChange={handleCompletedChange}
+            />
           </div>
-            </li>
-          ))}
+          <div>
+            <button onClick={removeTask} className="btn-danger">
+              Remove task
+            </button>
+            <button
+              onClick={handleOpenModalAndSetTask}
+              className="btn-secondary"
+            >
+              Click here to change task
+            </button>
+          </div>
         </ul>
       </div>
     </>

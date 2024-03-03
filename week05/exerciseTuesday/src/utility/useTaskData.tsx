@@ -7,7 +7,7 @@ const useTaskData = () => {
     const [ tasks, setTasks ] = useState<ITask[]>( tasksData )
 
     
-    return { tasks, setTasks }
+    return { tasks }
 }
  
 export default useTaskData;

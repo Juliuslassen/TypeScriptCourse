@@ -1,10 +1,7 @@
-# Assignment Readme Guidelines
+# Week 5 uge opgaver
 
 ## Overview
 
-- Your name
-- which assignment are included
-- which one are completed and which one are not
+- Julius Lassen
+- alle opgaver er inkluderet. Singleton og factory pattern er inkluderet
 
-## Friday presentation
-- add the friday presentation into the weekly folder
