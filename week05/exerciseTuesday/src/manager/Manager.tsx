@@ -5,6 +5,7 @@ const taskManager = (() => {
     
     return {
         getTasks: () => tasks,
+        getSpecificTask: (task: ITask) => tasks.find((t) => t === task),
         addTask: (task: ITask) => {
             tasks.push(task);
         },
@@ -15,7 +16,7 @@ const taskManager = (() => {
             tasks = tasks.map((t) => (t === task ? newTask : t));
         },
         markTaskAsCompleted: (task: ITask) => {
-            tasks = tasks.map((t) => (t === task ? { ...t, completed: true } : t));
+            tasks = tasks.map((t) => (t === task ? { ...t, completed: !t.completed } : t));
         },
         setTasks(newTasks: ITask[]): void {
             tasks = newTasks;

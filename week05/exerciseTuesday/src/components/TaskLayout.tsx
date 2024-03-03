@@ -9,80 +9,95 @@ import taskManager from '../manager/Manager';
 const TaskLayout: React.FC = () => {
   const manager = taskManager;
 
+  const [taskList, setTaskList] = useState<ITask[]>([]);
+
   const { tasks }: { tasks: ITask[] } = useTaskData();
   if (manager.getTasks().length === 0) {
-    manager.setTasks(tasks);
+    setTaskList(tasks);
+    manager.setTasks(taskList);
   }
 
-  const [ showModal, setShowModal ] = useState<boolean>();
-  const [ selectedTask, setSelectedTask ] = useState<ITask>();
+  const [showModal, setShowModal] = useState<boolean>();
+  const [selectedTask, setSelectedTask] = useState<ITask>();
 
-  const [ formData, setFormData ] = useState({
+  const [formData, setFormData] = useState({
     name: '',
     description: '',
-    timeEstimation: ''
-})
+    timeEstimation: '',
+  });
 
-const handleFormDataChange = (e) => {
-  const { name, value } = e.target;
+  const handleFormDataChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
+      ...prevData,
+      [name]: value,
     }));
-};
+  };
 
-const handleFormDataSUBMIT = (e) => {
+  const handleFormDataSUBMIT = (e) => {
     e.preventDefault();
 
     const newTask: ITask = {
-        name: formData.name,
-        description: formData.description,
-        timeEstimation: parseFloat(formData.timeEstimation),
-        completed: false
-    }
+      name: formData.name,
+      description: formData.description,
+      timeEstimation: parseFloat(formData.timeEstimation),
+      completed: false,
+    };
 
     manager.addTask(newTask);
-    
+
     setFormData({
       name: '',
       description: '',
-      timeEstimation: ''
-  })
-}
+      timeEstimation: '',
+    });
+  };
 
-
-  const [taskList, setTaskList] = useState<ITask[]>([]);
   useEffect(() => {
     setTaskList(manager.getTasks());
-  }, [showModal, selectedTask, formData, manager]); 
+  }, [showModal, selectedTask, formData, manager]);
 
   const openModal = () => {
     setShowModal(true);
   };
 
-  
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  const handleRemoveTask = (task: ITask) => {
+    manager.deleteTask(task);
+    setTaskList(manager.getTasks());
   };
 
   return (
     <>
       <div className="grid">
         <h1>Task Manager</h1>
-        <p> showmodal: {showModal} && selectedTask {selectedTask?.name}</p>
+        <p>
+          {' '}
+          showmodal: {showModal} && selectedTask {selectedTask?.name}
+        </p>
         <div>
-          <TaskAddForm formData={formData} handleFormDataChange={handleFormDataChange} handleFormDataSUBMIT={handleFormDataSUBMIT} />
+          <TaskAddForm
+            formData={formData}
+            handleFormDataChange={handleFormDataChange}
+            handleFormDataSUBMIT={handleFormDataSUBMIT}
+          />
         </div>
 
         <div className="task-grid">
           {taskList.map((task, index) => (
-            <Task
-              index={index} // Remember to add a unique key when rendering components in a loop
-              manager={manager}
-              openModal={openModal}
-              setSelectedTask={setSelectedTask}
-              task={task} // Assuming each task needs to be passed as a prop to the Task component
-            />
+            <li key={index} >
+              <Task
+                index={index}
+                manager={manager}
+                openModal={openModal}
+                setSelectedTask={setSelectedTask}
+                task={task}
+                handleRemoveTask={handleRemoveTask}
+              />
+            </li>
           ))}
         </div>
       </div>

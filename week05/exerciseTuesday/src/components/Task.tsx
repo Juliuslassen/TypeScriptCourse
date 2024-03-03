@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { ITask } from '../types/TaskType';
 
 const Task: React.FC = ({
   index,
@@ -6,34 +7,42 @@ const Task: React.FC = ({
   openModal,
   setSelectedTask,
   task,
+  handleRemoveTask
 }) => {
 
+  const [specificTask, setSpecificTask] = useState<ITask>(manager.getSpecificTask(task));
+
+  useEffect(() => {
+    setSpecificTask(manager.getSpecificTask(task));
+  }, [task, manager]);
+
   const handleCompletedChange = () => {
-    manager.markTaskAsCompleted(task);
+    setSpecificTask({ ...specificTask, completed: !specificTask.completed });
+    manager.markTaskAsCompleted(specificTask);
   };
-  
+
   const handleOpenModalAndSetTask = () => {
-    setSelectedTask(task); // Set the selected task
+    setSelectedTask(specificTask); // Set the selected task
     openModal(); // Open the modal
   };
-  
-  const handleRemoveTask = () => {
-    manager.deleteTask(task);
-  };
-  
+
+  const removeTask = () => {
+    handleRemoveTask(specificTask);
+  }
+
   return (
     <>
       <div className="task-list-container">
         <h2 className="task-list-heading">Tasks</h2>
         <ul className="task-list">
           <h1>Task {index}</h1>
-          <div> name: {task.name} </div>
-          <div> description: {task.description} </div>
-          <div> Is task done?: {task.completed ? 'Yes' : 'No'} </div>
-          {task.completed ? (
+          <div> name: {specificTask.name} </div>
+          <div> description: {specificTask.description} </div>
+          <div> Is task done?: {specificTask.completed ? 'Yes' : 'No'} </div>
+          {specificTask.completed ? (
             <div></div>
           ) : (
-            <div> time estimation: {task.timeEstimation} hours </div>
+            <div> time estimation: {specificTask.timeEstimation} hours </div>
           )}
           <div className="grid">
             <label htmlFor={`checkbox-${index}`} className="checkbox">
@@ -43,12 +52,12 @@ const Task: React.FC = ({
               type="checkbox"
               name={`checkbox-${index}`}
               id={`checkbox-${index}`}
-              checked={task.completed}
+              checked={specificTask.completed}
               onChange={handleCompletedChange}
             />
           </div>
           <div>
-            <button onClick={handleRemoveTask} className="btn-danger">
+            <button onClick={removeTask} className="btn-danger">
               Remove task
             </button>
             <button
